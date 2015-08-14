@@ -10,15 +10,17 @@ namespace MovieStreaming
         {
             Console.WriteLine("Creating a PlaybackActor");
 
-            Receive<PlayMovieMessage>(message => HandlePlayMovieMessage(message));
+            //Receive<PlayMovieMessage>(message => HandlePlayMovieMessage(message));
+            Context.ActorOf(Props.Create<UserCoordinatorActor>(), "UserCoordinator");
+            Context.ActorOf(Props.Create<PlaybackStatisticsActor>(), "PlaybackStatistics");
         }
 
-        private void HandlePlayMovieMessage(PlayMovieMessage message)
-        {
-            ColorConsole.WriteLineYellow(string.Format("PlayMovieMessage '{0}' for user '{1}'", 
-                message.MovieTitle, 
-                message.UserId));
-        }
+        //private void HandlePlayMovieMessage(PlayMovieMessage message)
+        //{
+        //    ColorConsole.WriteLineYellow(string.Format("PlayMovieMessage '{0}' for user '{1}'", 
+        //        message.MovieTitle, 
+        //        message.UserId));
+        //}
 
         protected override void PreStart()
         {

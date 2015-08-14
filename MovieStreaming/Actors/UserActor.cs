@@ -7,13 +7,15 @@ namespace MovieStreaming
 {
     public class UserActor : ReceiveActor
     {
+        private readonly int _userId;
         private string _currentlyWatching;
 
-        public UserActor()
+        public UserActor(int userId)
         {
+            _userId = userId;
             Console.WriteLine("Creating a UserActor");
 
-            ColorConsole.WriteLineCyan("Setting initial behaviour to stopped");
+            ColorConsole.WriteLineYellow("Setting initial behaviour to stopped");
             Stopped();
         }
 
@@ -23,7 +25,7 @@ namespace MovieStreaming
                     ColorConsole.WriteLineRed("Error: cannot start playing another movie before stopping the existing one"));
             Receive<StopMovieMessage>(message => StopPlayingCurrentMovie());
 
-            ColorConsole.WriteLineCyan("User Actor has now become Playing");
+            ColorConsole.WriteLineYellow("User Actor has now become Playing");
         }
 
         private void Stopped()
@@ -32,7 +34,7 @@ namespace MovieStreaming
             Receive<StopMovieMessage>(message => 
                 ColorConsole.WriteLineRed("Error: cannot stop if nothing is playing"));
 
-            ColorConsole.WriteLineCyan("User Actor has now become Stopped");
+            ColorConsole.WriteLineYellow("User Actor has now become Stopped");
         }
 
 
@@ -55,24 +57,24 @@ namespace MovieStreaming
 
         protected override void PreStart()
         {
-            ColorConsole.WriteLineGreen("UserActor PreStart");
+            ColorConsole.WriteLineYellow(string.Format("UserActor {0} PreStart", _userId));
         }
 
         protected override void PostStop()
         {
-            ColorConsole.WriteLineGreen("UserActor PostStop");
+            ColorConsole.WriteLineYellow(string.Format("UserActor {0} PostStop", _userId));
         }
 
         protected override void PreRestart(Exception reason, object message)
         {
-            ColorConsole.WriteLineGreen("UserActor PreRestart because: " + reason);
+            ColorConsole.WriteLineYellow(string.Format("UserActor {0} PreRestart because: {1}", _userId, reason));
 
             base.PreRestart(reason, message);
         }
 
         protected override void PostRestart(Exception reason)
         {
-            ColorConsole.WriteLineGreen("UserActor PostRestart because: " + reason);
+            ColorConsole.WriteLineYellow(string.Format("UserActor {0} PostRestart because: {1}", _userId ,reason));
 
             base.PostRestart(reason);
         }
