@@ -2,4 +2,4 @@ language: csharp
 solution: MovieStreaming.sln
 
 install:
-  - nuget restore GEHS.Poc.sln
+  - nuget restore MovieStreaming.sln
