@@ -3,3 +3,6 @@ solution: MovieStreaming.sln
 
 install:
   - nuget restore MovieStreaming.sln
+
+script:
+ - xbuild /p:Configuration=Release MovieStreaming.sln
